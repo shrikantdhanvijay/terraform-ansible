@@ -1,0 +1,5 @@
+.terraform.lock.hcl
+terra-key-ansible
+terraform.tfstate
+.terraform\providers\registry.terraform.io\hashicorp\aws\5.91.0\windows_386\terraform-provider-aws_v5.91.0_x5.exe
+.terraform/*
