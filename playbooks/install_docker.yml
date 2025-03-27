@@ -1,0 +1,76 @@
+
+-
+  name: Install Docker
+  hosts: shrikant_servers
+  become: yes
+
+
+  tasks:
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' or ansible_distribution == 'Amazon'
+
+
+    - name: Install Docker when OS is RedHat
+      dnf:
+        name: docker-ce
+        state: present
+
+      when: ansible_distribution == 'RedHat'
+
+
+    - name: Install Docker when OS is Amazon
+      dnf:
+        name: docker
+        state: present
+
+      when: ansible_distribution == 'Amazon'
+
+    - name: Install docker when OS is ubuntu
+      package:
+        name: docker.io
+        state: latest
+        update_cache: true
+      when:  ansible_distribution == 'Ubuntu'
+
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Adding exiting user to group docker
+      user:
+        name: ansible_user_id
+        groups: docker
+        append: yes
+
+    - name: Verify that the containers are running
+      command: docker ps
+    
+    - name: Update and upgrade packages 
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_distribution == 'Ubuntu'
+    
+    - name: Reboot the server if needed
+      reboot:
+        msg: "Rebooting the server after applying updates"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+
+
+
+
+
+
+
+

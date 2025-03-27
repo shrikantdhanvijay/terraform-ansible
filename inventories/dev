@@ -1,0 +1,16 @@
+# dev servers
+
+[shrikant_servers]
+server1 ansible_host=54.74.45.38
+server2 ansible_host=3.251.82.159
+server3 ansible_host=176.34.88.255
+
+server1 ansible_user=ubuntu
+server2 ansible_user=ec2-user
+server3 ansible_user=ec2-user
+
+
+[shrikant_servers:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file=/home/ubuntu/keys/terra-key-ansible.pem
+

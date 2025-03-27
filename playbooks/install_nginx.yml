@@ -1,0 +1,22 @@
+
+-
+  name: Install Nginx
+  hosts: shrikant_servers
+  become: yes
+
+
+  tasks:
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: latest
+
+    - name: Start Nginx
+      systemd_service:
+        name: nginx
+        state: started
+
+    - name: Enable Nginx
+      systemd_service:
+        name: nginx
+        enabled: true
